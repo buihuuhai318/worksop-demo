@@ -83,7 +83,7 @@ Chưa viết code. Tiêu chí của tôi đã rõ và có thể kiểm chứng c
 
 ## Bước 4 · AI viết code
 
-### Phần A · Nhờ AI viết code (làm trong thư mục `2-viet-code`)
+### Phần A · Nhờ AI viết code (làm trong thư mục `worksop-demo`)
 
 Chép câu dưới đây vào AI:
 
@@ -135,13 +135,13 @@ Một thành viên đổi code như sau, ghi chú “Tiện hơn cho hướng d�
 Có nên đưa thay đổi này vào nhánh chung không? Nêu hậu quả bằng ví dụ số tiền cụ thể.
 ```
 
-Sau đó, mở một phiên AI **mới** trong thư mục `4-kiem-tra-code` và nhờ AI tự kiểm tra nhánh:
+Sau đó, mở một phiên AI **mới** trong thư mục `worksop-demo` (khi đã có nhánh `feature/US-02` chứa thay đổi trên) và nhờ AI tự kiểm tra nhánh:
 
 ```
 Hãy review nhánh feature/US-02 so với nhánh develop. Chạy test, tìm lỗi và cho biết có nên đưa vào nhánh chung không. Không sửa file nào.
 ```
 
-Nếu công cụ AI của bạn không đọc được thư mục trên máy, hãy dán tiêu chí US-02 (file `docs/tieu-chi-US-02.md`) và kết quả của `git show HEAD` (gõ trong terminal ở thư mục `4-kiem-tra-code`) vào câu hỏi.
+Nếu công cụ AI của bạn không đọc được thư mục trên máy, hãy dán tiêu chí US-02 (file `docs/tieu-chi-US-02.md`) và kết quả của `git show HEAD` (gõ trong terminal ở thư mục `worksop-demo`) vào câu hỏi.
 
 ---
 
