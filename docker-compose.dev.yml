@@ -1,0 +1,13 @@
+services:
+  chi-phi-doan-fe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chi-phi-doan-fe
+    restart: always
+    networks:
+      - techzen-net
+
+networks:
+  techzen-net:
+    external: true

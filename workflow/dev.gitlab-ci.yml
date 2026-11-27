@@ -1,0 +1,26 @@
+.ssh_dev:
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache openssh-client git
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - ssh-keyscan -H -p $SSH_PORT $SERVER_IP >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - |
+      printf 'Host target\n  HostName %s\n  Port %s\n  User %s\n' "$SERVER_IP" "$SSH_PORT" "$SERVER_USER" > ~/.ssh/config
+    - chmod 600 ~/.ssh/config
+
+deploy_fe_dev:
+  extends: .ssh_dev
+  stage: deploy
+  needs: ["test"]
+  script:
+    - ssh target "mkdir -p $SERVER_BASE/$FE_CLONE_DIR"
+    - ssh target "cd $SERVER_BASE/$FE_CLONE_DIR && git fetch origin $CI_COMMIT_BRANCH && git checkout $CI_COMMIT_BRANCH && git reset --hard origin/$CI_COMMIT_BRANCH"
+    - scp docker-compose.dev.yml target:$SERVER_BASE/docker-compose.yml
+    - scp $PROJECT_NAME.dev.conf target:$NGINX_CONF_DIR/$PROJECT_NAME.conf
+    - ssh target "cd $SERVER_BASE && docker compose up -d --build $PROJECT_NAME-fe"
+    - ssh target "docker exec nginx-common nginx -t && docker exec nginx-common nginx -s reload"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'

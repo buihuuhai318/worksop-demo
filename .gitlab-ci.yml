@@ -1,0 +1,12 @@
+# Pipeline workshop: chỉ kiểm thử, không triển khai lên server.
+stages:
+  - test
+
+test:
+  stage: test
+  image: node:22-alpine
+  script:
+    - node scripts/kiem-tra-ci.mjs
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "develop"'
